@@ -5,6 +5,7 @@ from functools import lru_cache
 from backend.app.config import Settings, get_settings
 from backend.app.game.session import SessionStore
 from backend.app.game.words import WordLists, load_word_lists
+from backend.app.models.registry import PolicyRegistry, get_policy_registry
 
 
 @lru_cache
@@ -25,3 +26,7 @@ def get_session_store() -> SessionStore:
 
 def get_app_settings() -> Settings:
     return get_settings()
+
+
+def get_registry() -> PolicyRegistry:
+    return get_policy_registry()

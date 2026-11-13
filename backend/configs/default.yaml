@@ -1,0 +1,35 @@
+# RFT Wordle default experiment config
+model_id: Qwen/Qwen2.5-1.5B-Instruct
+model_revision: main
+model_device: cpu
+enable_lm: false
+model_policy: solver
+lora_adapter_path: null
+
+answers_train_file: answers_train.txt
+answers_val_file: answers_val.txt
+answers_test_file: answers_test.txt
+
+seed: 42
+per_answer: 2
+epochs: 1
+batch_size: 1
+grad_accum: 4
+learning_rate: 1.0e-5
+num_generations: 2
+max_new_tokens: 32
+
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - v_proj
+
+reward_solve: 5.0
+reward_legal: 0.1
+reward_invalid: -1.0
+reward_progress: 0.5
+reward_turn_cost: -0.05
+
+artifacts_dir: backend/artifacts

@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 FeedbackLiteral = Literal["green", "yellow", "gray"]
 StatusLiteral = Literal["in_progress", "won", "lost"]
+PolicyLiteral = Literal["solver", "base", "rft"]
 
 
 class GuessRow(BaseModel):
@@ -26,6 +27,20 @@ class CreateGameRequest(BaseModel):
 
 class SubmitGuessRequest(BaseModel):
     guess: str = Field(min_length=1, max_length=16)
+
+
+class SuggestRequest(BaseModel):
+    policy: PolicyLiteral | None = None
+    apply: bool = False
+
+
+class SuggestResponse(BaseModel):
+    policy: PolicyLiteral
+    guess: str | None
+    raw_ok: bool
+    error: str | None
+    applied: bool
+    board: GamePublicView | None = None
 
 
 class ApiError(BaseModel):

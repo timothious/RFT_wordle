@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from backend.app.api.routes_game import router as games_router
+from backend.app.api.routes_suggest import router as suggest_router
 from backend.app.config import get_settings
 
 
@@ -14,8 +15,8 @@ def create_app() -> FastAPI:
     settings = get_settings()
     app = FastAPI(
         title="RFT Wordle API",
-        version="0.1.0",
-        description="Backend for the RFT Wordle demo (game play; AI suggestion deferred).",
+        version="0.2.0",
+        description="Backend for RFT Wordle: game play, solver/base/rft suggestions, offline GRPO training.",
     )
 
     app.add_middleware(
@@ -41,7 +42,7 @@ def create_app() -> FastAPI:
     @app.exception_handler(RequestValidationError)
     async def validation_exception_handler(
         _request: Request,
-        exc: RequestValidationError,
+        _exc: RequestValidationError,
     ) -> JSONResponse:
         return JSONResponse(
             status_code=422,
@@ -49,10 +50,17 @@ def create_app() -> FastAPI:
         )
 
     @app.get("/health")
-    def health() -> dict[str, str]:
-        return {"status": "ok", "service": "rft-wordle-api"}
+    def health() -> dict:
+        return {
+            "status": "ok",
+            "service": "rft-wordle-api",
+            "default_policy": settings.model_policy,
+            "enable_lm": settings.enable_lm,
+            "model_id": settings.model_id if settings.enable_lm else None,
+        }
 
     app.include_router(games_router)
+    app.include_router(suggest_router)
     return app
 
 
