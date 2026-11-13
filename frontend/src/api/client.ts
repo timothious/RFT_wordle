@@ -14,8 +14,15 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   if (!response.ok) {
     let message = `Request failed (${response.status})`
     try {
-      const body = (await response.json()) as { message?: string; detail?: string }
-      message = body.message ?? body.detail ?? message
+      const body = (await response.json()) as {
+        message?: string
+        detail?: string | { message?: string }
+      }
+      if (typeof body.message === 'string') message = body.message
+      else if (typeof body.detail === 'string') message = body.detail
+      else if (body.detail && typeof body.detail.message === 'string') {
+        message = body.detail.message
+      }
     } catch {
       /* ignore non-JSON errors */
     }
