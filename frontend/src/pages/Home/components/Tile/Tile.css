@@ -1,0 +1,37 @@
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--border);
+  border-radius: 0.3rem;
+  font-weight: 700;
+  font-size: calc(var(--tile-size) * 0.45);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.tile--empty {
+  background: var(--tile-empty);
+}
+
+.tile--filled {
+  background: var(--tile-active);
+  border-color: var(--text-muted);
+}
+
+.tile--correct {
+  background: var(--correct);
+  border-color: var(--correct);
+}
+
+.tile--present {
+  background: var(--present);
+  border-color: var(--present);
+  color: #1a1508;
+}
+
+.tile--absent {
+  background: var(--absent);
+  border-color: var(--absent);
+}

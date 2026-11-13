@@ -1,0 +1,44 @@
+.keyboard {
+  display: grid;
+  gap: 0.4rem;
+  width: min(100%, 34rem);
+  margin: 0 auto;
+}
+
+.keyboard__row {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.key {
+  min-width: 1.7rem;
+  height: 3rem;
+  padding: 0 0.45rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: #4a5a50;
+  color: var(--text);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.key--green {
+  background: var(--correct);
+}
+
+.key--yellow {
+  background: var(--present);
+  color: #1a1508;
+}
+
+.key--gray {
+  background: #2a3330;
+  color: var(--text-muted);
+}
+
+.key--action {
+  min-width: 3.2rem;
+  font-size: 0.75rem;
+}

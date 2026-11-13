@@ -1,0 +1,11 @@
+.home {
+  width: min(100% - 1.5rem, 40rem);
+  margin: 0 auto;
+  padding: 1.5rem 0 2.5rem;
+}
+
+.home__toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}

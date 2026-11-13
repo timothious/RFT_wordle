@@ -1,0 +1,16 @@
+.status-banner {
+  text-align: center;
+  min-height: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.status-banner__message {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.status-banner__error {
+  margin: 0.35rem 0 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+}

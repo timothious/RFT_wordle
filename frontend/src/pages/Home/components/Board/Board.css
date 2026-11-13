@@ -1,0 +1,12 @@
+.board {
+  display: grid;
+  gap: var(--gap);
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+
+.board__row {
+  display: grid;
+  grid-template-columns: repeat(5, var(--tile-size));
+  gap: var(--gap);
+}
