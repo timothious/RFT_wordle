@@ -1,0 +1,21 @@
+# Host port 8000 is already in use on this machine.
+# API is published on free host port 8001 -> container 8000.
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rft-wordle-api
+    ports:
+      - "8001:8000"
+    environment:
+      - MODEL_POLICY=solver
+    volumes:
+      - ./backend:/app/backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
