@@ -5,11 +5,21 @@ interface StatusBannerProps {
   status?: GameStatus
   remainingGuesses?: number
   error?: string | null
+  loading?: boolean
 }
 
-export function StatusBanner({ status, remainingGuesses, error }: StatusBannerProps) {
-  let message = 'Start a new game to play.'
-  if (status === 'in_progress' && remainingGuesses != null) {
+export function StatusBanner({
+  status,
+  remainingGuesses,
+  error,
+  loading,
+}: StatusBannerProps) {
+  let message = 'Connecting to API…'
+  if (!loading && !status) {
+    message = 'No active game. Click New Game.'
+  } else if (loading && !status) {
+    message = 'Connecting to API…'
+  } else if (status === 'in_progress' && remainingGuesses != null) {
     message = `${remainingGuesses} guess${remainingGuesses === 1 ? '' : 'es'} left`
   } else if (status === 'won') {
     message = 'You solved it.'

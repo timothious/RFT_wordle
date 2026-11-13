@@ -17,9 +17,12 @@ export function Home() {
     suggestion,
     policy,
     setPolicy,
-    isLoading,
+    isBooting,
+    isBusy,
     error,
+    shakeToken,
     finished,
+    canType,
     maxGuesses,
     wordLength,
     newGame,
@@ -54,21 +57,36 @@ export function Home() {
   }, [backspace, submitGuess, typeLetter])
 
   const board = game?.board ?? []
-  const inputDisabled = isLoading || finished || !game
 
   return (
     <main className="home">
       <BrandHeader />
 
       <div className="home__toolbar">
-        <NewGameButton disabled={isLoading} onClick={() => void newGame()} />
+        <NewGameButton disabled={isBusy || isBooting} onClick={() => void newGame()} />
       </div>
 
       <StatusBanner
         status={game?.status}
         remainingGuesses={game?.remaining_guesses}
         error={error}
+        loading={isBooting}
       />
+
+      <ul className="home__legend" aria-label="Color meaning">
+        <li>
+          <span className="home__legend-swatch home__legend-swatch--green" />
+          Right letter, right spot
+        </li>
+        <li>
+          <span className="home__legend-swatch home__legend-swatch--yellow" />
+          Right letter, wrong spot
+        </li>
+        <li>
+          <span className="home__legend-swatch home__legend-swatch--gray" />
+          Not in the word
+        </li>
+      </ul>
 
       <Board
         board={board}
@@ -76,12 +94,13 @@ export function Home() {
         maxGuesses={maxGuesses}
         wordLength={wordLength}
         finished={Boolean(finished)}
+        shakeToken={shakeToken}
       />
 
       <SuggestPanel
         policy={policy}
         suggestion={suggestion}
-        disabled={inputDisabled}
+        disabled={!canType || isBusy}
         onPolicyChange={setPolicy}
         onAsk={() => void requestSuggest()}
         onApply={() => void applySuggestion()}
@@ -89,7 +108,7 @@ export function Home() {
 
       <Keyboard
         board={board}
-        disabled={inputDisabled}
+        disabled={!canType}
         onLetter={typeLetter}
         onBackspace={backspace}
         onEnter={() => void submitGuess()}

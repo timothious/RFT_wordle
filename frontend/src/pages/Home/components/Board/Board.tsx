@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import type { GuessRow } from '../../../../api'
 import { Tile } from '../Tile'
 import './Board.css'
@@ -8,9 +9,28 @@ interface BoardProps {
   maxGuesses: number
   wordLength: number
   finished: boolean
+  shakeToken?: number
 }
 
-export function Board({ board, draft, maxGuesses, wordLength, finished }: BoardProps) {
+export function Board({
+  board,
+  draft,
+  maxGuesses,
+  wordLength,
+  finished,
+  shakeToken = 0,
+}: BoardProps) {
+  const shakeRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!shakeToken) return
+    const node = shakeRef.current
+    if (!node) return
+    node.classList.remove('board-shake--active')
+    void node.offsetWidth
+    node.classList.add('board-shake--active')
+  }, [shakeToken])
+
   const rows = Array.from({ length: maxGuesses }, (_, rowIndex) => {
     const played = board[rowIndex]
     if (played) {
@@ -35,12 +55,14 @@ export function Board({ board, draft, maxGuesses, wordLength, finished }: BoardP
   })
 
   return (
-    <div className="board" role="grid" aria-label="Wordle board">
-      {rows.map((cells, rowIndex) => (
-        <div className="board__row" role="row" key={rowIndex}>
-          {cells}
-        </div>
-      ))}
+    <div className="board-shake" ref={shakeRef}>
+      <div className="board" role="grid" aria-label="Wordle board">
+        {rows.map((cells, rowIndex) => (
+          <div className="board__row" role="row" key={rowIndex}>
+            {cells}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

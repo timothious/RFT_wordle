@@ -16,9 +16,21 @@ const stateClass: Record<TileState, string> = {
   gray: 'tile--absent',
 }
 
+const stateLabel: Record<TileState, string> = {
+  empty: 'empty',
+  filled: 'typed',
+  green: 'correct position',
+  yellow: 'wrong position',
+  gray: 'not in word',
+}
+
 export function Tile({ letter = '', state = 'empty' }: TileProps) {
   return (
-    <div className={`tile ${stateClass[state]}`} aria-label={letter ? `${letter} ${state}` : 'empty'}>
+    <div
+      className={`tile ${stateClass[state]}`}
+      data-state={state}
+      aria-label={letter ? `${letter}, ${stateLabel[state]}` : 'empty'}
+    >
       {letter}
     </div>
   )

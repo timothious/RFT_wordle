@@ -35,6 +35,16 @@ def test_create_and_play_game_without_leaking_answer() -> None:
     assert unchanged["board"] == []
 
 
+def test_aeiou_is_an_allowed_guess() -> None:
+    created = client.post("/games", json={"seed": 7})
+    game_id = created.json()["game_id"]
+
+    response = client.post(f"/games/{game_id}/guesses", json={"guess": "AEIOU"})
+
+    assert response.status_code == 200
+    assert response.json()["board"][0]["guess"] == "aeiou"
+
+
 def test_not_found_game() -> None:
     response = client.get("/games/does-not-exist")
     assert response.status_code == 404

@@ -6,6 +6,10 @@ export default defineConfig({
   server: {
     host: '127.0.0.1',
     port: 5173,
+    proxy: {
+      '/games': 'http://127.0.0.1:8001',
+      '/health': 'http://127.0.0.1:8001',
+    },
   },
   preview: {
     host: '127.0.0.1',

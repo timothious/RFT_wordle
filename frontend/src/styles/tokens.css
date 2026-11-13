@@ -1,17 +1,19 @@
 :root {
-  --bg: #0f1410;
-  --surface: #1a221c;
-  --text: #e8eee9;
-  --text-muted: #9aab9e;
-  --border: #2c3a30;
-  --correct: #3d8b5a;
-  --present: #c4a035;
-  --absent: #3a4540;
-  --tile-empty: #243028;
-  --tile-active: #2f3d34;
-  --danger: #c45c5c;
+  /* Classic Wordle-style feedback colors */
+  --correct: #6aaa64; /* right letter, right position */
+  --present: #c9b458; /* right letter, wrong position */
+  --absent: #787c7e; /* letter not in word */
+
+  --bg: #121213;
+  --surface: #1a1a1b;
+  --text: #ffffff;
+  --text-muted: #818384;
+  --border: #3a3a3c;
+  --tile-empty: #121213;
+  --tile-active: #121213;
+  --danger: #ff6b6b;
   --font-display: 'Segoe UI', 'Helvetica Neue', sans-serif;
   --font-body: 'Segoe UI', 'Helvetica Neue', sans-serif;
-  --tile-size: clamp(2.5rem, 12vw, 3.5rem);
+  --tile-size: clamp(2.5rem, 12vw, 3.75rem);
   --gap: 0.35rem;
 }
